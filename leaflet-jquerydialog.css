@@ -1,0 +1,15 @@
+.leaflet-control-jquerydialog {
+}
+
+.leaflet-control-jquerydialog i {
+    font-size: 16px;
+    color: #444;
+
+    line-height: 26px;
+}
+
+.leaflet-touch .leaflet-control-jquerydialog i {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+}

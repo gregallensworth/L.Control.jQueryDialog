@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>L.Control.jQueryDialog</title>
+
+    <!--
+    Presumably you use Leaflet and jQuery UI with a theme...
+    or else you wouldn't be wanting a control to open JQUI dialogs from Leaflet  ;)
+    -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet-src.js"></script>
+	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/ui/1.12.0-beta.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0-beta.1/themes/smoothness/jquery-ui.css" />
+
+    <!--
+    jQuery UI doesn't come with a built-in set of icons, so we load up some other one
+    Myself, I'm fond of FontAwesome
+    -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+    <!--
+    this control: JS and CSS files
+    -->
+    <link rel="stylesheet" type="text/css" href="../leaflet-jquerydialog.css" />
+    <script type="text/javascript" src="../leaflet-jquerydialog.js"></script>
+</head>
+<body>
+
+
+<style type="text/css">
+body {
+    padding: 0;
+    margin: 0;
+}
+html, body, #map {
+    height: 100%;
+}
+div.ui-dialog {
+    z-index: 1000;
+}
+.ui-widget-overlay {
+    z-index:1000;
+    opacity:0.8;
+}
+</style>
+<script type="text/javascript">
+$(document).ready(function () {
+    // the basic map, no frills
+    var MAP = L.map('map');
+    MAP.setView([51.50,0.127],10);
+    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright/">OpenStreetMap contributors</a>'
+	}).addTo(MAP);
+
+    // our dialogs; one is modal and the other is not and that's okay
+    $('#dialog-about').dialog({
+        modal: false, autoOpen: false, closeOnEsc: true, draggable: false,
+        position: { my:'left top', at:'left+5 top+5', or:'#map' }
+    });
+    $('#dialog-help').dialog({
+        modal: true, autoOpen: false, closeOnEsc: false, draggable: false,
+    });
+    
+    // the map controls to toggle those dialogs
+    new L.Control.jQueryDialog({
+        dialogId: 'dialog-help',
+        tooltip: "How to use this thing",
+        iconClass: 'fa fa-question-circle'
+    }).addTo(MAP);
+    new L.Control.jQueryDialog({
+        dialogId: 'dialog-about',
+        tooltip: "What is it?",
+        iconClass: 'fa fa-info-circle'
+    }).addTo(MAP);
+});
+</script>
+
+
+
+<!-- a plain ol' map -->
+<div id="map"></div>
+
+
+<!-- the dialog that we'll be opening with the control -->
+<div id="dialog-about" title="About">
+    <p>This control simply opens a Bootstrap modal. This is great for placing Help links, for making legends that don't consume screen space, or even contact and feedback forms.</p>
+    <p>For more information, see <a href="https://github.com/gregallensworth/L.Control.BootstrapModal" target="_blank">check out the repo</a>.</p>    
+</div>
+
+<!-- the dialog that we'll be opening with the control -->
+<div id="dialog-help" title="Using This Thing">
+    <p>For information on using this control plugin, see <a href="https://github.com/gregallensworth/L.Control.BootstrapModal" target="_blank">the project on Github</a>.</p>
+</div>
+
+
+</body>
+</html>
+
